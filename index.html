@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Form</title>
+</head>
+<body>
+    <h1>Data Form</h1>
+    <form id="dataForm">
+        <label for="node">Node:</label>
+        <select id="node" name="node">
+            <option value="Node-1">Node-1</option>
+            <option value="Node-2">Node-2</option>
+        </select><br><br>
+        <label for="temperature">Temperature:</label>
+        <input type="number" id="temperature" name="temperature"><br><br>
+        <label for="tds">TDS:</label>
+        <input type="number" id="tds" name="tds"><br><br>
+        <button type="button" id="submitButton">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('submitButton').addEventListener('click', function() {
+            var node = document.getElementById('node').value;
+            var temperature = document.getElementById('temperature').value;
+            var tds = document.getElementById('tds').value;
+
+            var formData = {
+                node: node,
+                temperature: temperature,
+                tds: tds
+            };
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://localhost:1629/calibdata/', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        alert('Data submitted successfully!');
+                    } else {
+                        alert('Error: ' + xhr.responseText);
+                    }
+                }
+            };
+
+            xhr.send(JSON.stringify(formData));
+        });
+    </script>
+</body>
+</html>
+
+
