@@ -156,6 +156,21 @@
             var xhr = new XMLHttpRequest();
             xhr.open('POST', 'https://smartcitylivinglab.iiit.ac.in/zf-backend-api/calibdata/', true);
             xhr.setRequestHeader('Content-Type', 'application/json');
+            
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        // The request was successful
+                        console.log(xhr.responseText);
+                    } else {
+                        // There was an error
+                        console.error('Error: ' + xhr.status);
+                        if (xhr.status === 307) {
+                            console.error('Received a 307 Temporary Redirect. The browser should automatically follow the redirect.');
+                        }
+                    }
+                }
+            };
     
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
